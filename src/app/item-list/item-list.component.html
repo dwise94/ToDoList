@@ -1,0 +1,32 @@
+<h2>To Do List</h2>
+<ul class="items">
+  <li
+    *ngFor="let item of list"
+    [class.selected]="item === selectedItem"
+    (click)="onSelect(item)"
+  >
+    <label class="container">
+      <input type="checkbox" />
+      <span class="checkmark"></span>
+      <span *ngIf="!editable">{{ item.name }}</span>
+      <button id="deleteButton" #delete (click)="deleteItem(item)">
+        Delete
+      </button>
+      <button #edit (click)="changeEditable()" [hidden]="editable">Edit</button>
+      <button #save (click)="saveItem(item, item.name)" [hidden]="!editable">
+        Save
+      </button>
+    </label>
+
+    <input
+      *ngIf="editable"
+      type="text"
+      id="editInput"
+      [(ngModel)]="item.name"
+    />
+  </li>
+</ul>
+<input #inputBox (keyup.enter)="addItem(inputBox.value); inputBox.value = ''" />
+<button #addButton (click)="addItem(inputBox.value); inputBox.value = ''">
+  Add Item
+</button>
